@@ -1,0 +1,1 @@
+cmd_/home/fw/Desktop/hw3_files/module/hw3secws.o := ld -m elf_i386   -r -o /home/fw/Desktop/hw3_files/module/hw3secws.o /home/fw/Desktop/hw3_files/module/./rule_table_module/rule_table_module.o /home/fw/Desktop/hw3_files/module/./hook_module/hook_module.o /home/fw/Desktop/hw3_files/module/./reset_log_module/reset_log_module.o 

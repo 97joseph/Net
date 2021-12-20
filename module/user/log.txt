@@ -1,0 +1,16 @@
+info details: time = 1638096921,protocol = 1 , src_ip =   167838210, dst_ip =167837953, src_port =   3, dst_port =0, count =3, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638096922,protocol = 1 , src_ip =   167838210, dst_ip =167837953, src_port =   5936, dst_port =62760, count =5, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638096927,protocol = 1 , src_ip =   167838210, dst_ip =167837953, src_port =   57348, dst_port =61794, count =2, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638096928,protocol = 1 , src_ip =   167837953, dst_ip =167838210, src_port =   5936, dst_port =62760, count =3, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638096929,protocol = 1 , src_ip =   167837953, dst_ip =167838210, src_port =   0, dst_port =0, count =1, action = accept
+
+info details: time = 1638096921,protocol = 1 , src_ip =   167838210, dst_ip =167837953, src_port =   3, dst_port =0, count =3, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638365860,protocol = 6 , src_ip =   167837953, dst_ip =167838210, src_port =   1023, dst_port =0, count =6, reason=NO_MATCHING_RULE ,action = drop
+
+info details: time = 1638365860,protocol = 6 , src_ip =   167837953, dst_ip =167838210, src_port =   1023, dst_port =0, count =6, reason=NO_MATCHING_RULE ,action = drop
+

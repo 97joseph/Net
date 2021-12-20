@@ -1,0 +1,1 @@
+cmd_/home/fw/Desktop/hw3_files/module/hw3secws.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/fw/Desktop/hw3_files/module/hw3secws.ko /home/fw/Desktop/hw3_files/module/hw3secws.o /home/fw/Desktop/hw3_files/module/hw3secws.mod.o ;  true

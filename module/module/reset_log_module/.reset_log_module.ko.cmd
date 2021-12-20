@@ -1,0 +1,1 @@
+cmd_/home/fw/Desktop/hw3_files/module/reset_log_module/reset_log_module.ko := ld -r -m elf_i386 -T ./scripts/module-common.lds --build-id  -o /home/fw/Desktop/hw3_files/module/reset_log_module/reset_log_module.ko /home/fw/Desktop/hw3_files/module/reset_log_module/reset_log_module.o /home/fw/Desktop/hw3_files/module/reset_log_module/reset_log_module.mod.o ;  true

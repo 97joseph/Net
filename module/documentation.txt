@@ -1,0 +1,253 @@
+Documentation:
+
+General background: this module simulates a netfilter, and it is comprised of several devices, tied by one module:
+
+The module is called : hw4secws.ko
+
+The devices are: 
+
+1. 	rule table device:
+ 
+	name: rule_table_module
+	specification: for checking if a packet matches a rule
+
+2.	hook device:
+
+	name: hook_module
+	specification: for parsing and filtering packets
+
+3.	reset log device:
+
+	name: reset_log_module
+	specification: for resetting the log
+
+4.	connection table device:
+
+	name: connections_module
+	specification: for logging tcp connections
+
+
+
+
+module folder:
+
+
+hw4secws.c :
+
+Functions and specifications:
+
+1.	name : static int __init simple_init(void);
+	specification: init function for module
+
+
+
+2. 	name : static void __exit simple_exit(void);
+	specification: exit function for module
+
+
+
+hw4secws.h :
+ 
+Functions and specifications:
+
+
+1.	name : int simple_rule_table_init(void);
+	specification: init function for rule_table module
+
+2.	name : void simple_rule_table_cleanup(void);
+	specification: exit function for rule_table module
+
+/**hook**/
+1.	name : int simple_hook_init(void);
+	specification: init function for hook module
+
+2.	name : void simple_rule_table_cleanup(void);
+	specification: exit function for hook module
+/**show_log**/
+
+static log_row_t log_array[BUFFER_SIZE+1][BUFFER_SIZE];
+
+1.	name : int simple_show_log_init(void);
+	specification: init function for show_log module
+
+2.	name : void simple_show_log_table_cleanup(void);
+	specification: exit function for show_log module
+
+
+/**reset_log**/
+1.	name : int simple_reset_log_init(void);
+	specification: init function for reset_log module
+
+2.	name : void simple_reset_log_table_cleanup(void);
+	specification: exit function for reset_log module
+
+
+
+rule_table_module folder:
+
+
+rule_table_module.c:
+
+Functions and specifications:
+
+
+1.	name : static struct file_operations fops
+	specification: file operations struct
+
+2.	name : ssize_t display(struct device *dev, struct device_attribute *attr, char *buf)
+	specification: sysfs show implementation
+
+3.	name : ssize_t ssize_t modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
+	specification: sysfs store implementation
+
+4.	name : direction_t find_direction(char * direction_string)
+	specification: gets rule direction
+
+5.	name : ack_t find_ack(char * ack_string)
+	specification: gets rule ack
+
+6.	name : int get_prefix_from_ip(char * ip)
+	specification: get prefix from ip address
+
+7.	name : __be16 get_port_number(char * port)
+	specification: gets rule port number
+
+8.	name : int get_protocol(char *protocol)
+	specification: gets rule protocol
+
+9.	name : __u8 get_action(char * action)
+	specification: get rule action
+
+10.	name : int is_rule_in_table(rule_t rule)
+	specification: checks if rule in table
+
+11.	name : char *get_sub_array(const char *array, int from, int to)
+	specification: gets sub array from array
+
+12.	name : int packet_matches_rule(int k,struct packet_info *info)
+	specification: check if a specific packet matches a rule
+
+
+
+hook_module folder:
+
+
+1. log.h :
+
+Functions and specifications:
+
+
+/**rule table**/
+	1. name :int decide_on_packet(struct packet_info *info);
+	specification: function that decides if a packet has a  comaptible rule
+
+
+
+	2. name : void insert_to_conns_list(log_row_t * log_row);
+	specification: inserts a connection into the connection list
+
+	3. name :int if_connection_in_connections_list(connection_info * connection);
+	specification: checks if a connection is in the connection list
+
+
+	4. name: void change_state(log_row_t * log_row,int ack);
+	specification: 
+
+
+2. hook_module.c:
+
+Functions and specifications:
+
+
+1.	name : int matches_previous_packet(struct packet_info *packet);
+	specification:checks if a packet matches a previous one
+
+2.	name : void update_count_for_log_entry(int location);
+	specification: updates the count value of a log entry
+
+3. 	name : void insert_into_log(packet_info * info);
+	specification: inserts into the log
+
+4.	name : void print_status(void);
+	specification: prints values given
+
+5.	name : unsigned int forward_hook_func(void *priv,
+                   struct sk_buff *skb,
+                   const struct nf_hook_state *state);
+	specification: hook function that also counts the amount of dropped/accepted packets
+
+6.	name : int hook_module_open(struct inode *_inode, struct file *_file);
+	specification: driver open function
+
+7.	name : static int hook_module_close(struct inode *i, struct file *f)
+	specification: driver close function
+
+8.	name : static int hook_module_close(struct inode *i, struct file *f)
+	specification: driver close function
+
+9. 	name : static ssize_t hook_module_read(struct file *fp, char *buff, size_t length, loff_t *ppos)
+	specification: driver read function
+
+10.	name : static struct file_operations fops
+	specification: file operations struct
+
+11.	name : void cleanup(int device_created)
+	specification: cleanup assisting function
+
+
+
+
+
+reset_log_module folder:
+
+reset_log_module.c:
+
+Functions and specifications:
+
+
+
+1.	name : void reset_log(void);
+	specification: resets the log
+
+2.	name : static struct file_operations fops
+	specification: file operations struct
+
+3. 	name : ssize_t reset_log_display(struct device *dev, struct device_attribute *attr, char *buf)
+	specification: sysfs show implementation
+
+4.	name : ssize_t ssize_t reset_log_modify(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
+	specification: sysfs store implementation	
+
+
+
+user folder:
+
+user.c:
+
+Functions and specifications:
+
+
+
+1.	name : char * create_line(void)
+	specification: creates log line
+
+2.	name : int get_number_of_lines(FILE *fp)
+	specification: get number of line is file
+
+3. 	name : char * concatenate_strings(const char** strings)
+	specification: concat array of strings to single string
+
+4.	name : int load_rules(char * filepath)
+	specification: load rules action from user
+
+5.	name : int show_rules(char * filepath)
+	specification: show rules action from user
+
+6.	name : int clear_log(void)
+	specification: clear_log action from user
+
+7. 	name : int main(int argc,char * argv[])
+	specification: main function
+
+
+
